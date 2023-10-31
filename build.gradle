@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+
+    group = 'ru.dargen'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+        dependencies {
+            compileOnly 'org.projectlombok:lombok:1.18.20'
+            annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        }
+    }
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+        withSourcesJar()
+    }
+
+    publishing {
+        repositories {
+            maven {
+                url 'https://repo.starfarm.fun/releases'
+                credentials {
+                    username System.getenv('SF_REPO_USER')
+                    password System.getenv('SF_REPO_PASSWORD')
+                }
+            }
+
+        }
+
+        publications {
+            maven(MavenPublication) {
+                groupId group
+                artifactId 'crowbar-' + project.name
+                version version
+                from project.components.java
+            }
+        }
+    }
+
+    tasks.withType(JavaCompile)*.options*.encoding = 'UTF-8'
+
+}

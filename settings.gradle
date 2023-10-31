@@ -1,0 +1,3 @@
+rootProject.name = 'crowbar'
+include 'core'
+
