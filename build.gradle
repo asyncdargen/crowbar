@@ -1,16 +1,14 @@
 plugins {
     id 'java'
-    id 'java-library'
     id 'maven-publish'
 }
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
     group 'ru.dargen'
-    version '1.0.0'
+    version '1.0.1'
 
     repositories {
         mavenCentral()

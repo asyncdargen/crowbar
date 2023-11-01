@@ -1,9 +1,8 @@
-version '1.0.0'
+version '1.0.1'
 
 dependencies {
     compileOnly project(':crowbar-core')
-    implementation project(':crowbar-core')
 
-    api 'org.ow2.asm:asm:9.1'
-    api 'org.ow2.asm:asm-tree:9.1'
+    implementation 'org.ow2.asm:asm:9.1'
+    implementation 'org.ow2.asm:asm-tree:9.1'
 }
