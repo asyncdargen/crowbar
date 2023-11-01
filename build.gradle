@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-allprojects {
+subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
