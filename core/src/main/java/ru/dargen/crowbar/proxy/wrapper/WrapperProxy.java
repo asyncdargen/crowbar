@@ -9,7 +9,7 @@ import ru.dargen.crowbar.proxy.wrapper.data.accessor.MethodAccessorData;
 
 @Getter
 @RequiredArgsConstructor
-public abstract class WrapperProxyCompiler<T, D extends WrapperProxyCompiler.ProxyCompileData> {
+public abstract class WrapperProxy<T, D extends WrapperProxy.WrappingData> {
 
     protected final WrapperProxyData<T> data;
 
@@ -33,21 +33,21 @@ public abstract class WrapperProxyCompiler<T, D extends WrapperProxyCompiler.Pro
         });
     }
 
-    protected abstract T compile0(D data);
+    protected abstract T wrap0(D data);
 
-    public T compile(Object inlinedObject) {
+    public T wrap(Object inlinedObject) {
         var data = createCompileData(inlinedObject);
         prepare(data);
-        return compile0(data);
+        return wrap0(data);
     }
 
-    public T compile() {
-        return compile(null);
+    public T wrap() {
+        return wrap(null);
     }
 
     @Getter
     @RequiredArgsConstructor
-    public static class ProxyCompileData {
+    public static class WrappingData {
 
         protected final Object inlinedObject;
 

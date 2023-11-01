@@ -20,20 +20,20 @@ public class MethodAccessorResolver implements AccessorResolver<MethodAccessor> 
         var owningClass = WrapperProxyScanner.resolveClass(annotation.owner(), proxiedClass);
         var methodName = MemberAccessorData.getAccessingMemberName(annotation.value(), method);
         var isStatic = annotation.isStatic();
-        var inlineOwner = annotation.inlinedOwner() && !isStatic;
+        var inlinedOwner = annotation.inlinedOwner() && !isStatic;
 
         var returnType = WrapperProxyScanner.resolveClass(annotation.returnType(), method.getReturnType());
         var parameterTypes = annotation.parameterTypes().length == 0
-                ? getParameterTypes(method.getParameterTypes(), inlineOwner)
+                ? getParameterTypes(method.getParameterTypes(), isStatic || inlinedOwner)
                 : Arrays.stream(annotation.parameterTypes()).map(WrapperProxyScanner::resolveClass).toArray(Class[]::new);
 
         return new MethodAccessorData(
                 owningClass, method, isStatic, methodName,
-                returnType, parameterTypes, inlineOwner);
+                returnType, parameterTypes, inlinedOwner);
     }
 
-    private Class<?>[] getParameterTypes(Class<?>[] parameterTypes, boolean inlineOwner) {
-        if (parameterTypes.length == 0 || inlineOwner) {
+    private Class<?>[] getParameterTypes(Class<?>[] parameterTypes, boolean needOwner) {
+        if (parameterTypes.length == 0 || needOwner) {
             return parameterTypes;
         }
 

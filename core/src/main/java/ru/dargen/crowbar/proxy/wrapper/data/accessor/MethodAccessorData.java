@@ -19,4 +19,8 @@ public class MethodAccessorData extends MemberAccessorData {
         this.parametersTypes = parametersTypes;
     }
 
+    public int getParametersCount() {
+        return parametersTypes.length;
+    }
+
 }

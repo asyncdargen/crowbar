@@ -24,7 +24,7 @@ public class Reflection {
     public Class<?>[] getObjectArrayClasses(Object[] objects) {
         var argsTypes = new Class<?>[objects.length];
         for (int i = 0; i < objects.length; i++) {
-            argsTypes[i] = objects[i].getClass();
+            argsTypes[i] = unwrap(objects[i].getClass());
         }
 
         return argsTypes;
@@ -232,7 +232,9 @@ public class Reflection {
 
     @SneakyThrows
     public Class<?> wrap(Class<?> primitiveClass) {
-        if (primitiveClass == byte.class) {
+        if (primitiveClass == void.class) {
+            return Void.class;
+        } else if (primitiveClass == byte.class) {
             return Byte.class;
         } else if (primitiveClass == boolean.class) {
             return Boolean.class;
@@ -255,7 +257,9 @@ public class Reflection {
 
     @SneakyThrows
     public Class<?> unwrap(Class<?> wrapperClass) {
-        if (wrapperClass == Byte.class) {
+        if (wrapperClass == Void.class) {
+            return void.class;
+        } else if (wrapperClass == Byte.class) {
             return byte.class;
         } else if (wrapperClass == Boolean.class) {
             return boolean.class;
@@ -274,6 +278,17 @@ public class Reflection {
         }
 
         return wrapperClass;
+    }
+
+    @SneakyThrows
+    public StackTraceElement[] currentStackTrace() {
+        var stackTrace = Thread.currentThread().getStackTrace();
+        return Arrays.copyOfRange(stackTrace, 2, stackTrace.length);
+    }
+
+    @SneakyThrows
+    public Class<?> getCallerClass() {
+        return Reflection.getClass(currentStackTrace()[1].getClassName());
     }
 
 }

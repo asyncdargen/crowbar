@@ -9,7 +9,7 @@ public class MemberAccessorData extends AccessorData {
 
     protected final boolean isStatic;
     protected final String memberName;
-    protected final boolean requiredInlineOwner;
+    protected final boolean requiredInlinedOwner;
 
     public MemberAccessorData(Class<?> proxiedClass, Method method,
                               boolean isStatic, String memberName,
@@ -18,7 +18,7 @@ public class MemberAccessorData extends AccessorData {
 
         this.isStatic = isStatic;
         this.memberName = memberName;
-        this.requiredInlineOwner = requiredWrapInstance;
+        this.requiredInlinedOwner = requiredWrapInstance;
     }
 
     public static String getAccessingMemberName(String name, Method method) {

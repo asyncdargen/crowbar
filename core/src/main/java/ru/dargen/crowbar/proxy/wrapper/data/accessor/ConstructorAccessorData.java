@@ -7,11 +7,15 @@ import java.lang.reflect.Method;
 @Getter
 public class ConstructorAccessorData extends AccessorData {
 
-    private final Class<?>[] parameterTypes;
+    private final Class<?>[] parametersTypes;
 
     public ConstructorAccessorData(Class<?> proxiedClass, Method method, Class<?>[] parameterTypes) {
         super(proxiedClass, method);
-        this.parameterTypes = parameterTypes;
+        this.parametersTypes = parameterTypes;
+    }
+
+    public int getParametersCount() {
+        return parametersTypes.length;
     }
 
 }
