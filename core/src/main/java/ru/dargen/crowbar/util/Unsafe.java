@@ -7,12 +7,8 @@ import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.ProtectionDomain;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.Map.entry;
@@ -125,7 +121,6 @@ public class Unsafe {
     public Class<?> defineClass(String name,
                                 byte[] bytes, int index, int length,
                                 ClassLoader classLoader, ProtectionDomain protectionDomain) {
-        Files.write(Paths.get(Objects.toString(name).replace("/", ".") + ThreadLocalRandom.current().nextInt() + ".class"), bytes);
         return (Class<?>) JDK.MH_UNSAFE_CLASS_DEFINE.invoke(name, bytes, index, length, classLoader, protectionDomain);
     }
 

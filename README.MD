@@ -1,6 +1,24 @@
 # CrowBar
 Java library with implemented access tools based on Reflection, Invoke (MH), Unsafe and ASM
 ___
+## Add to project
+Connect to `repo.starfarm.fun` repository
+```groovy
+repositories {
+    maven { url 'https://repo.starfarm.fun/releases' }
+}
+```
+
+Add dependency `ru.dargen:crowbar-core:CORE-VERSION` - crowbar core with base tools.
+And `ru.dargen:crowbar-asm:ASM-VERSION` - crowbar asm module, with fast (direct) accessors and proxies
+
+```groovy
+dependencies {
+    implementation 'ru.dargen:crowbar-core:CORE-VERSION'
+    implementation 'ru.dargen:crowbar-asm:ASM-VERSION'
+}
+```
+___
 
 ## Accessors
 Simple methods for accessing
