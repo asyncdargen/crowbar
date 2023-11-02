@@ -7,6 +7,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
 
+    version properties["${project.name.split('-')[1]}-version"]
     group 'ru.dargen'
 
     repositories {
