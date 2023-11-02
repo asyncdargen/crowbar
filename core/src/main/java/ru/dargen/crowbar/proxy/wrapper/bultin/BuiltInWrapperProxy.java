@@ -85,7 +85,7 @@ public class BuiltInWrapperProxy<T>
     }
 
     @Override
-    protected BuiltInWrappingData<T> createCompileData(Object inlinedObject) {
+    protected BuiltInWrappingData<T> createWrappingData(Object inlinedObject) {
         return new BuiltInWrappingData<>(inlinedObject, ProxyBuilder.newBuilder(data.proxyClass()));
     }
 

@@ -1,4 +1,4 @@
-version '1.0.1'
+version properties['asm-version']
 
 dependencies {
     compileOnly project(':crowbar-core')

@@ -3,6 +3,7 @@ package ru.dargen.crowbar.proxy;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import ru.dargen.crowbar.util.ClassLoaders;
 import ru.dargen.crowbar.util.Reflection;
 
 import java.lang.reflect.Method;
@@ -39,11 +40,11 @@ public class ProxyBuilder<T> {
     }
 
     public T build() {
-        return build(Thread.currentThread().getContextClassLoader());
+        return build(ClassLoaders.classLoader());
     }
 
     public static <T> ProxyBuilder<T> newBuilder(Class<T> proxyClass) {
-        return new ProxyBuilder<T>(proxyClass);
+        return new ProxyBuilder<>(proxyClass);
     }
 
 }

@@ -98,7 +98,7 @@ public class Reflection {
         int index0 = index;
         field:
         for (Field field : declaredClass.getDeclaredFields()) {
-            if (field.getType() != fieldType) {
+            if (!fieldType.isAssignableFrom(field.getType())) {
                 continue;
             } else if (genericsTypes != null) {
                 if (field.getGenericType() instanceof ParameterizedType parameterizedType) {
@@ -125,7 +125,7 @@ public class Reflection {
     }
 
     @SneakyThrows
-    public Field findField(Class<?> declaredClass, Class<?> fieldType, Type[] genericsTypes) {
+    public Field findField(Class<?> declaredClass, Class<?> fieldType, Type... genericsTypes) {
         return findField(declaredClass, fieldType, genericsTypes, 0);
     }
 
@@ -174,7 +174,7 @@ public class Reflection {
         int index0 = index;
         method:
         for (Method method : declaredClass.getMethods()) {
-            if (returnType != null && method.getReturnType() != returnType) {
+            if (returnType != null && !returnType.isAssignableFrom(method.getReturnType())) {
                 continue;
             } else if (argsTypes != null) {
                 var parameterTypes = method.getParameterTypes();
@@ -183,7 +183,7 @@ public class Reflection {
                         continue method;
                     }
 
-                    if (parameterTypes[i] != argsTypes[i]) {
+                    if (!argsTypes[i].isAssignableFrom(parameterTypes[i])) {
                         continue method;
                     }
                 }
@@ -203,12 +203,12 @@ public class Reflection {
     }
 
     @SneakyThrows
-    public Method findMethod(Class<?> declaredClass, Class<?>[] argsTypes) {
+    public Method findMethod(Class<?> declaredClass, Class<?>... argsTypes) {
         return findMethod(declaredClass, null, argsTypes, 0);
     }
 
     @SneakyThrows
-    public Method findMethod(Class<?> declaredClass, Class<?> returnType, Class<?>[] argsTypes) {
+    public Method findMethod(Class<?> declaredClass, Class<?> returnType, Class<?>... argsTypes) {
         return findMethod(declaredClass, returnType, argsTypes, 0);
     }
 

@@ -8,7 +8,6 @@ subprojects {
     apply plugin: 'maven-publish'
 
     group 'ru.dargen'
-    version '1.0.1'
 
     repositories {
         mavenCentral()

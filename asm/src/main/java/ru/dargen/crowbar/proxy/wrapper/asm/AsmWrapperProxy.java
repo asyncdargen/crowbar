@@ -90,7 +90,7 @@ public class AsmWrapperProxy<T> extends WrapperProxy<T, WrapperProxy.WrappingDat
 
             method.visitMethodInsn(
                     data.isStatic() ? INVOKESTATIC : INVOKEVIRTUAL, getInternalName(ownerClass), data.getMemberName(),
-                    descriptor, false
+                    descriptor, ownerClass.isInterface()
             );
 
             if (Reflection.unwrap(data.getReturnType()) == void.class) {
@@ -129,11 +129,6 @@ public class AsmWrapperProxy<T> extends WrapperProxy<T, WrapperProxy.WrappingDat
     }
 
     @Override
-    protected WrappingData createCompileData(Object inlinedObject) {
-        return new WrappingData(inlinedObject);
-    }
-
-    @Override
     protected void prepare(WrappingData data) {
         if (proxyConstructor == null) {
             proxyBuilder = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
@@ -156,6 +151,11 @@ public class AsmWrapperProxy<T> extends WrapperProxy<T, WrapperProxy.WrappingDat
             proxyConstructor = Accessors.invoke().openConstructor(proxyClass, Object.class);
             proxyBuilder = null;
         }
+    }
+
+    @Override
+    protected WrappingData createWrappingData(Object inlinedObject) {
+        return new WrappingData(inlinedObject);
     }
 
     @Override

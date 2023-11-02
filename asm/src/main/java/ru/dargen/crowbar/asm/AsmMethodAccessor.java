@@ -46,7 +46,7 @@ public class AsmMethodAccessor implements Asm {
 
             method.visitMethodInsn(
                     isStatic ? INVOKESTATIC : INVOKEVIRTUAL, getInternalName(ownerClass), methodName,
-                    descriptor, false
+                    descriptor, ownerClass.isInterface()
             );
 
             if (Reflection.unwrap(returnType) == void.class) {

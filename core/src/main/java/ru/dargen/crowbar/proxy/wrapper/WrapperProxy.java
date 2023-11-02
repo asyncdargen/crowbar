@@ -19,7 +19,7 @@ public abstract class WrapperProxy<T, D extends WrapperProxy.WrappingData> {
 
     protected abstract void appendConstructorAccessor(Class<?> proxyClass, ConstructorAccessorData data, D proxyData);
 
-    protected abstract D createCompileData(Object inlinedObject);
+    protected abstract D createWrappingData(Object inlinedObject);
 
     protected void prepare(D data) {
         this.data.accessorsList().forEach(accessorData -> {
@@ -36,7 +36,7 @@ public abstract class WrapperProxy<T, D extends WrapperProxy.WrappingData> {
     protected abstract T wrap0(D data);
 
     public T wrap(Object inlinedObject) {
-        var data = createCompileData(inlinedObject);
+        var data = createWrappingData(inlinedObject);
         prepare(data);
         return wrap0(data);
     }

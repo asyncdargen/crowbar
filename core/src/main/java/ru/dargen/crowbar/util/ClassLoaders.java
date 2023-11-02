@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 public class ClassLoaders {
 
     public ClassLoader classLoader() {
-        return of(ClassLoader.class);
+        return of(ClassLoaders.class);
     }
 
     public ClassLoader currentClass() {

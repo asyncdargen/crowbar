@@ -96,7 +96,7 @@ interface StringAccessor {
 
 var accessor = ProxyWrappers.builtIn()
     .create(StringAccessor.class, Accessors.invoke())
-    .compile("Go play CS?");
+    .wrap("Go play CS?");
 
 System.out.println(accessor.newString(new byte[]{72, 105})); //Out: Hi
 System.out.println(Arrays.toString(accessor.getValue())); //Value of inlined object: [71, 111, 32, 37, 115, 63]
