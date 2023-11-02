@@ -31,14 +31,10 @@ public class WrapperProxyScanner {
         if (!proxyClass.isInterface()) {
             throw new IllegalArgumentException("Not interface");
         }
-        if (!proxyClass.isAnnotationPresent(ProxiedClass.class)) {
-            throw new IllegalArgumentException("@ProxiedClass annotation not present");
-        }
 
-        var proxiedClass = resolveClass(proxyClass.getDeclaredAnnotation(ProxiedClass.class));
-        if (proxiedClass == null) {
-            throw new IllegalStateException("Proxied class not found");
-        }
+        var proxiedClass = (Class<?>) (proxyClass.isAnnotationPresent(ProxiedClass.class)
+                ? resolveClass(proxyClass.getDeclaredAnnotation(ProxiedClass.class), Object.class)
+                : Object.class);
 
         var accessorsData = Arrays.stream(proxyClass.getDeclaredMethods())
                 .map(method -> resolveAccessorData(proxiedClass, method))
