@@ -12,10 +12,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProxyBoundHandler implements InvocationHandler {
 
+    private static final Object[] EMPTY_ARGS = new Object[0];
+
     private final Map<Method, ProxyMethodExecutor> executorMap;
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if (args == null) {
+            args = EMPTY_ARGS;
+        }
+
         var executor = executorMap.get(method);
 
         if (executor == null) {
