@@ -2,20 +2,20 @@
 Java library with implemented access tools based on Reflection, Invoke (MH), Unsafe and ASM
 ___
 ## Add to project
-Connect to `repo.starfarm.fun` repository
+Connect to `jitpack.io` repository
 ```groovy
 repositories {
-    maven { url 'https://repo.starfarm.fun/releases' }
+    maven { url 'https://jitpack.io' }
 }
 ```
 
-Add dependency `ru.dargen:crowbar-core:CORE-VERSION` - crowbar core with base tools.
-And `ru.dargen:crowbar-asm:ASM-VERSION` - crowbar asm module, with fast (direct) accessors and proxies
+Add dependency `com.github.asyncdargen:crowbar-core:CORE-VERSION` - crowbar core with base tools.
+And `com.github.asyncdargen:crowbar-asm:ASM-VERSION` - crowbar asm module, with fast (direct) accessors and proxies
 
 ```groovy
 dependencies {
-    implementation 'ru.dargen:crowbar-core:CORE-VERSION'
-    implementation 'ru.dargen:crowbar-asm:ASM-VERSION'
+    implementation 'com.github.asyncdargen:crowbar-core:CORE-VERSION'
+    implementation 'com.github.asyncdargen:crowbar-asm:ASM-VERSION'
 }
 ```
 ___

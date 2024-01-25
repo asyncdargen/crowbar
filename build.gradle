@@ -1,11 +1,9 @@
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven-publish'
 
     version properties["${project.name.split('-')[1]}-version"]
     group 'ru.dargen'
@@ -23,28 +21,5 @@ subprojects {
         withSourcesJar()
     }
 
-    publishing {
-        repositories {
-            maven {
-                url 'https://repo.starfarm.fun/releases'
-                credentials {
-                    username System.getenv('SF_REPO_USER')
-                    password System.getenv('SF_REPO_PASSWORD')
-                }
-            }
-
-        }
-
-        publications {
-            maven(MavenPublication) {
-                groupId group
-                artifactId project.name
-                version version
-                from project.components.java
-            }
-        }
-    }
-
     tasks.withType(JavaCompile)*.options*.encoding = 'UTF-8'
-
 }
