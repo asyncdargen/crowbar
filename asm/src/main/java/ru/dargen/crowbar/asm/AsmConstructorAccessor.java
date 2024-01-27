@@ -21,7 +21,8 @@ public class AsmConstructorAccessor implements Asm {
     public final Map<String, ConstructorAccessor<?>> ACCESSOR_MAP = new ConcurrentHashMap<>();
 
     public <T> ConstructorAccessor<T> create(Class<?> ownerClass, Class<?>[] parameterTypes) {
-        return (ConstructorAccessor<T>) ACCESSOR_MAP.computeIfAbsent(constructorKey(ownerClass, parameterTypes),
+        return (ConstructorAccessor<T>) ACCESSOR_MAP.computeIfAbsent(
+                constructorKey(ownerClass, parameterTypes),
                 key -> create0(ownerClass, parameterTypes));
     }
 

@@ -20,7 +20,8 @@ public class AsmFieldAccessor implements Asm {
     public final Map<String, FieldAccessor<?>> ACCESSOR_MAP = new ConcurrentHashMap<>();
 
     public <T> FieldAccessor<T> create(Class<?> ownerClass, boolean isStatic, String fieldName, Class<?> fieldType) {
-        return (FieldAccessor<T>) ACCESSOR_MAP.computeIfAbsent(fieldKey(ownerClass, isStatic, fieldName, fieldType),
+        return (FieldAccessor<T>) ACCESSOR_MAP.computeIfAbsent(
+                fieldKey(ownerClass, isStatic, fieldName, fieldType),
                 key -> create0(ownerClass, isStatic, fieldName, fieldType));
     }
 

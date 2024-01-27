@@ -24,13 +24,13 @@ public class UnsafeAccessorFactory implements AccessorFactory {
     }
 
     @Override
-    public <T> MethodAccessor<T> openMethod(Class<?> declaredClass, String methodName, Class<T> returnType, Class<?>... argsTypes) {
-        throw new UnsupportedOperationException();
+    public <T> ConstructorAccessor<T> openConstructor(Constructor<T> constructor) {
+        return new UnsafeConstructorAccessor<>(constructor.getDeclaringClass());
     }
 
     @Override
-    public <T> ConstructorAccessor<T> openConstructor(Constructor<T> constructor) {
-        return new UnsafeConstructorAccessor<>(constructor);
+    @SuppressWarnings("unchecked")
+    public <T> ConstructorAccessor<T> openConstructor(Class<?> declaredClass, Class<?>... argumentsTypes) {
+        return new UnsafeConstructorAccessor<>((Class<T>) declaredClass);
     }
-
 }

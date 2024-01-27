@@ -24,7 +24,7 @@ public class MethodAccessorResolver implements AccessorResolver<MethodAccessor> 
 
         var returnType = WrapperProxyScanner.resolveClass(annotation.returnType(), method.getReturnType());
         var parameterTypes = annotation.parameterTypes().length == 0
-                ? getParameterTypes(method.getParameterTypes(), isStatic || inlinedOwner)
+                ? getParameterTypes(method.getParameterTypes(), !isStatic && !inlinedOwner)
                 : Arrays.stream(annotation.parameterTypes()).map(WrapperProxyScanner::resolveClass).toArray(Class[]::new);
 
         return new MethodAccessorData(
@@ -33,7 +33,7 @@ public class MethodAccessorResolver implements AccessorResolver<MethodAccessor> 
     }
 
     private Class<?>[] getParameterTypes(Class<?>[] parameterTypes, boolean needOwner) {
-        if (parameterTypes.length == 0 || needOwner) {
+        if (parameterTypes.length == 0 || !needOwner) {
             return parameterTypes;
         }
 

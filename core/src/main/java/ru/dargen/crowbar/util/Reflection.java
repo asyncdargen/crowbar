@@ -288,7 +288,12 @@ public class Reflection {
 
     @SneakyThrows
     public Class<?> getCallerClass() {
-        return Reflection.getClass(currentStackTrace()[1].getClassName());
+        return getCallerClass(0);
+    }
+
+    @SneakyThrows
+    public Class<?> getCallerClass(int offset) {
+        return Reflection.getClass(currentStackTrace()[1 + offset].getClassName());
     }
 
 }

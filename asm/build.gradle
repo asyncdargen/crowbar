@@ -2,5 +2,5 @@ dependencies {
     compileOnly project(':crowbar-core')
 
     implementation 'org.ow2.asm:asm:9.1'
-    implementation 'org.ow2.asm:asm-tree:9.1'
+//    implementation 'org.ow2.asm:asm-tree:9.1'
 }

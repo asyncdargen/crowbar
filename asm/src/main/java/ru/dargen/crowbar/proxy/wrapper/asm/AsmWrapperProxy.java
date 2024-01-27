@@ -47,14 +47,14 @@ public class AsmWrapperProxy<T> extends WrapperProxy<T, WrapperProxy.WrappingDat
                         getInlinedOwner(method, proxyName);
                     } else method.visitVarInsn(ALOAD, 1);
 
-                    method.visitFieldInsn(data.isStatic() ? GETSTATIC : GETFIELD, getInternalName(ownerClass), data.getMemberName(), getDescriptor(data.getFieldType()));
+                    method.visitFieldInsn(GETFIELD, getInternalName(ownerClass), data.getMemberName(), getDescriptor(data.getFieldType()));
                 }
 
                 makeReturn(method, origin.getReturnType(), data.getFieldType());
             } else {
                 if (data.isStatic()) {
                     method.visitVarInsn(ALOAD, 1);
-                    method.visitFieldInsn(GETSTATIC, getInternalName(ownerClass), data.getMemberName(), getDescriptor(data.getFieldType()));
+                    method.visitFieldInsn(PUTSTATIC, getInternalName(ownerClass), data.getMemberName(), getDescriptor(data.getFieldType()));
                 } else {
                     if (data.isRequiredInlinedOwner()) {
                         getInlinedOwner(method, proxyName);
@@ -62,7 +62,7 @@ public class AsmWrapperProxy<T> extends WrapperProxy<T, WrapperProxy.WrappingDat
 
                     method.visitVarInsn(ALOAD, 2);
 
-                    method.visitFieldInsn(data.isStatic() ? PUTSTATIC : PUTFIELD, getInternalName(ownerClass), data.getMemberName(), getDescriptor(data.getFieldType()));
+                    method.visitFieldInsn(PUTFIELD, getInternalName(ownerClass), data.getMemberName(), getDescriptor(data.getFieldType()));
                 }
 
                 method.visitInsn(RETURN);
@@ -134,7 +134,8 @@ public class AsmWrapperProxy<T> extends WrapperProxy<T, WrapperProxy.WrappingDat
             proxyBuilder = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
             proxyBuilder.visit(V17, ACC_SYNTHETIC | ACC_FINAL,
                     proxyName, null,
-                    Asm.AccessorBridge.NAME, new String[]{getInternalName(this.data.proxyClass())});
+                    Asm.AccessorBridge.NAME,
+                    new String[]{getInternalName(this.data.proxyClass())});
 
             proxyBuilder.visitField(ACC_FINAL, "inlinedOwner", "Ljava/lang/Object;", null, null);
             Asm.putMethod(proxyBuilder, ACC_PRIVATE, "<init>", "(Ljava/lang/Object;)V", method -> {

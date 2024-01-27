@@ -5,7 +5,7 @@ plugins {
 subprojects {
     apply plugin: 'java'
 
-    version '1.0.4' //properties["${project.name.split('-')[1]}-version"]
+    version '1.0.5' //properties["${project.name.split('-')[1]}-version"]
     group 'ru.dargen'
 
     repositories {

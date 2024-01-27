@@ -23,11 +23,16 @@ public interface Asm extends Opcodes {
 
     static ClassWriter newAccessorClass(String type, Class<?> ownerType, String memberName) {
         var writer = new ClassWriter(COMPUTE_MAXS | COMPUTE_FRAMES);
-        writer.visit(V1_8, ACC_FINAL | ACC_SYNTHETIC,
+        writer.visit(V17, ACC_FINAL | ACC_SYNTHETIC,
                 ACCESSORS_PACKAGE + accessorName(type, ownerType, memberName),
                 null, AccessorBridge.NAME,
                 new String[]{"ru/dargen/crowbar/accessor/%sAccessor".formatted(type)});
         return writer;
+    }
+
+    static String accessorName(String type, Class<?> ownerClass, String fieldName) {
+        return "Asm%sAccessor$%s$%s$%s"
+                .formatted(type, ownerClass.getSimpleName(), fieldName, current().nextInt(Integer.MAX_VALUE));
     }
 
     static Class<?> defineClass(String name, ClassWriter writer, ClassLoader classLoader) {
@@ -45,11 +50,7 @@ public interface Asm extends Opcodes {
         method.visitCode();
         code.accept(method);
         method.visitEnd();
-    }
-
-    static String accessorName(String type, Class<?> ownerClass, String fieldName) {
-        return "Asm%sAccessor$%s$%s$%s"
-                .formatted(type, ownerClass.getSimpleName(), fieldName, current().nextInt(Integer.MAX_VALUE));
+        method.visitMaxs(0, 0);
     }
 
     static Type[] getTypes(Class<?>... classes) {
@@ -64,7 +65,6 @@ public interface Asm extends Opcodes {
 
         method.visitInsn(Type.getType(logicalReturnType).getOpcode(IRETURN));
     }
-
 
     @UtilityClass
     class AccessorBridge implements Opcodes {

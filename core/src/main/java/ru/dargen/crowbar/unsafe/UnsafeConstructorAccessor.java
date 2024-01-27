@@ -13,12 +13,8 @@ import java.lang.reflect.Constructor;
 @RequiredArgsConstructor
 public class UnsafeConstructorAccessor<T> implements ConstructorAccessor<T> {
 
-    private final Constructor<T> constructor;
-
-    @Override
-    public Class<T> getDeclaringClass() {
-        return constructor.getDeclaringClass();
-    }
+    private final Class<T> declaringClass;
+    private Constructor<T> constructor;
 
     @Override
     public T newInstance(Object... args) {

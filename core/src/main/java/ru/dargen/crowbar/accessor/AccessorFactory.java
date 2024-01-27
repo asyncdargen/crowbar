@@ -15,11 +15,24 @@ public interface AccessorFactory {
         return openField(Reflection.getField(declaredClass, fieldName));
     }
 
+    default <T> FieldAccessor<T> openField(Class<?> declaredClass, String fieldName, boolean isStatic, Class<?> fieldType) {
+        return openField(Reflection.getField(declaredClass, fieldName));
+    }
+
     default <T> FieldAccessor<T> openField(Class<?> declaredClass, String fieldName, Class<?> fieldType) {
-        return openField(declaredClass, fieldName);
+        return openField(Reflection.getField(declaredClass, fieldName));
     }
 
     <T> MethodAccessor<T> openMethod(Method method);
+
+    default <T> MethodAccessor<T> openMethod(Class<?> declaredClass, String methodName, boolean isStatic,
+                                             Class<? extends T> returnType, Class<?>... argsTypes) {
+        return openMethod(Reflection.getMethod(declaredClass, methodName, argsTypes));
+    }
+
+    default <T> MethodAccessor<T> openMethod(Class<?> declaredClass, String methodName, Class<?>... argsTypes) {
+        return openMethod(Reflection.getMethod(declaredClass, methodName, argsTypes));
+    }
 
     default <T> MethodAccessor<T> openMethod(Class<?> declaredClass, String methodName,
                                              Class<T> returnType, Class<?>... argsTypes) {

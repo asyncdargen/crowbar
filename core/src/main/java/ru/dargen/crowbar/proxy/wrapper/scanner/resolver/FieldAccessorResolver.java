@@ -21,13 +21,14 @@ public class FieldAccessorResolver implements AccessorResolver<FieldAccessor> {
         var accessorType = Reflection.unwrap(method.getReturnType()) == void.class && method.getParameterCount() >= 1
                 ? Type.SETTER : Type.GETTER;
 
+        var isStatic = annotation.isStatic();
+        var inlineOwner = annotation.inlinedOwner() && !isStatic;
+        var fieldName = MemberAccessorData.getAccessingMemberName(annotation.value(), method);
+
         var owningClass = WrapperProxyScanner.resolveClass(annotation.owner(), proxiedClass);
         var fieldType = WrapperProxyScanner.resolveClass(annotation.type(), () -> accessorType == Type.GETTER
                 ? method.getReturnType()
                 : method.getParameterTypes()[method.getParameterCount() - 1]);
-        var fieldName = MemberAccessorData.getAccessingMemberName(annotation.value(), method);
-        var isStatic = annotation.isStatic();
-        var inlineOwner = annotation.inlinedOwner() && !isStatic;
 
         return new FieldAccessorData(
                 owningClass, method, isStatic, fieldName, fieldType,

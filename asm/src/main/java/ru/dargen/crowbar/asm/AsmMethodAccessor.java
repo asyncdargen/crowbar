@@ -22,7 +22,8 @@ public class AsmMethodAccessor implements Asm {
 
     public <T> MethodAccessor<T> create(Class<?> ownerClass, boolean isStatic, String methodName,
                                         Class<?> returnType, Class<?>[] parameterTypes) {
-        return (MethodAccessor<T>) ACCESSOR_MAP.computeIfAbsent(methodKey(ownerClass, isStatic, methodName, returnType, parameterTypes),
+        return (MethodAccessor<T>) ACCESSOR_MAP.computeIfAbsent(
+                methodKey(ownerClass, isStatic, methodName, returnType, parameterTypes),
                 key -> create0(ownerClass, isStatic, methodName, returnType, parameterTypes));
     }
 
@@ -56,7 +57,6 @@ public class AsmMethodAccessor implements Asm {
             }
 
             makeReturn(method, Object.class, returnType);
-//            method.visitInsn(Type.getReturnType(descriptor).getOpcode(IRETURN));
         });
 
         putMethod(writer, ACC_PUBLIC, "getDeclaringClass", "()Ljava/lang/Class;", method -> {

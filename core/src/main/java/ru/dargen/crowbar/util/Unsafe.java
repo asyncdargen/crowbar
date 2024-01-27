@@ -197,7 +197,6 @@ public class Unsafe {
 
     public record Accessor<T>(Setter<T> setter, Getter<T> getter) {
 
-
         public void set(Object base, long offset, T value) {
             setter.set(base, offset, value);
         }
